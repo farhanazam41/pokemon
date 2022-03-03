@@ -6,9 +6,8 @@ import axios from 'axios';
 function App() {
 
   const [pokemonData, setPokemonData] = useState([]);
-  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
-  const [nextPage, setNextPage] = useState();
+  const [nextPage, setNextPage] = useState([]);
   const [error,setError] = useState(false);
   const [errorText,setErrorText] = useState('');
   const [retry,setRetry] = useState(false);
@@ -20,9 +19,8 @@ function App() {
     setRetry(false)
     setError(false);  // setting error state to false at the start api call
     setLoading(true);
-    axios.get(`${baseUrl}/${query}?flakiness=1`)
+    axios.get(`${baseUrl}/${query}?chaos=true`)
     .then(response => {
-    console.log(response.data);
     setPokemonData(response.data.pokemon);
     setLoading(false); 
    }).catch((error) => {  

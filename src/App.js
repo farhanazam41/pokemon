@@ -5,29 +5,29 @@ import axios from 'axios';
 
 function App() {
 
-  const [pokemonData, setPokemonData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [nextPage, setNextPage] = useState([]);
-  const [error,setError] = useState(false);
-  const [errorText,setErrorText] = useState('');
-  const [retry,setRetry] = useState(false);
+  const [pokemonData, setPokemonData] = useState([]); // array of pokemon objects
+  const [loading, setLoading] = useState(false); // boolean to show loading spinner
+  const [nextPage, setNextPage] = useState([]); // array of pokemon objects for next Page, however not implemented yet
+  const [error,setError] = useState(false); // setting error boolean state
+  const [errorText,setErrorText] = useState(''); // error message
+  const [retry,setRetry] = useState(false); // boolean to show retry button
 
-  const baseUrl = 'https://hungry-woolly-leech.glitch.me/api/pokemon/search';
+  const baseUrl = 'https://hungry-woolly-leech.glitch.me/api/pokemon/search'; //setting the base url for the api
 
 
-  const getPokemon = (query,retries) => {
+  const getPokemon = (query,retries) => { // function to get pokemon data
     setRetry(false)
     setError(false);  // setting error state to false at the start api call
     setLoading(true);
     axios.get(`${baseUrl}/${query}?chaos=true`)
     .then(response => {
-    setPokemonData(response.data.pokemon);
+    setPokemonData(response.data.pokemon); // setting pokemon data
     setLoading(false); 
-   }).catch((error) => {  
+   }).catch((error) => {   // error handling
      if(error.response){
      setRetry(true)
      setError(true)
-     setErrorText(error.message);
+     setErrorText(error.message); // setting error message
      setTimeout(() => {
        if(retries > 0){
         getPokemon(query,retries-1);
@@ -38,12 +38,12 @@ function App() {
    })
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { // handleChange function to get the value of the input field
     const { value } = e.target;
     getPokemon(value,2)
   }
 
-  const debounce = (func) => {
+  const debounce = (func) => { // debounce function to prevent multiple api calls
     let timer;
 
     return function(...args) {
@@ -51,14 +51,14 @@ function App() {
       if (timer) {
         clearTimeout(timer);
       }
-      timer = setTimeout(() => {
+      timer = setTimeout(() => { // setTimeout function to run the getPokemon function after 3 seconds
         timer = null;
         func.apply(context, args);
       }, 500);
     }
   }
 
-  const optimizedSearch = useCallback(debounce(handleChange),[]);
+  const optimizedSearch = useCallback(debounce(handleChange),[]); // useCallback is used to avoid re-rendering the component when the search query changes
    
   return (
     <div>

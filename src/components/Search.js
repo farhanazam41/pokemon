@@ -1,4 +1,4 @@
-const Search = (props) => {
+const Search = (props) => { // Search component
    
     return (
       <div className="col-md-4 form-inline"> 

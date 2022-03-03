@@ -1,8 +1,8 @@
 const PokemonList = ({ pokemon }) => {
 
-    const baseUrl = `https://hungry-woolly-leech.glitch.me/api/pokemon/`;
+    const baseUrl = `https://hungry-woolly-leech.glitch.me/api/pokemon/`; //setting the base url for the api
 
-    const listAttributes = (id) => {
+    const listAttributes = (id) => { // function to get pokemon stats
         window.location.href= `${baseUrl}${id}`;
     }
     return (
